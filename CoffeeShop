@@ -1,0 +1,174 @@
+import java.util.*;
+
+class CoffeeShop {
+
+    static String name;
+    static List<MenuItem> menu = new ArrayList<>();
+    static List<MenuItem> orders = new ArrayList<>();
+    static StringBuilder sb = new StringBuilder();
+    public CoffeeShop() {
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        CoffeeShop.name = name;
+    }
+
+    public static List<MenuItem> getMenu() {
+        return menu;
+    }
+
+    public static void setMenu(List<MenuItem> menu) {
+        CoffeeShop.menu = menu;
+    }
+
+    public static List<MenuItem> getOrders() {
+        return orders;
+    }
+
+    public static void setOrders(List<MenuItem> orders) {
+        CoffeeShop.orders = orders;
+    }
+
+    public static void addOrder (MenuItem item) {
+        for (MenuItem menuItem : menu) {
+            if (Objects.equals(menuItem.getItem(), item.getItem())) {
+                orders.add(item);
+                System.out.println("Item " + item.getItem() + " is added!");
+            } else {
+                System.out.println("This Item is Currently Unavailable!");
+            }
+            break;
+        }
+
+    }
+
+    public static void fulfillOrder (){
+         if(orders.size() != 0){
+             System.out.println("The " + menu.get(0).getItem() + " is Ready!");
+
+         } else{
+             System.out.println("All orders have been fulfilled");
+         }
+    }
+
+    public static void listOrders () {
+        for (MenuItem order : orders) {
+            if (orders.size() == 0) {
+                System.out.println("No Orders");
+            } else {
+                System.out.println(order.getItem());
+            }
+        }
+    }
+
+    public static void dueAmount (List<MenuItem> menu){
+        double totalAmount = 0.0;
+        for (int i = 0; i < orders.size(); i++) {
+             totalAmount += menu.get(i).getPrice();
+        }
+        System.out.println("Total Amount = " + totalAmount);
+    }
+
+    public static void cheapestItem (List<MenuItem> menu) {
+        MenuItem m10 = new MenuItem("Milk","Drink",1.30);
+        for (int i = 0; i < menu.size()-1; i++)
+            if (menu.get(i).getPrice() <= m10.getPrice()) {
+        System.out.println("The Cheapest Item is: " + menu.get(i).getItem() + " and its price is: " + menu.get(i).getPrice());
+       }
+    }
+
+    public static void drinksOnly(List<MenuItem> menu){
+        MenuItem m10 = new MenuItem("Milk","Drink",1.30);
+        for (int i = 0; i < menu.size()-1; i++)
+            if (menu.get(i).getType() == m10.getType()) {
+                System.out.println("The drink item: " + menu.get(i).getItem());
+            }
+    }
+
+    public static void foodOnly(List<MenuItem> menu){
+        MenuItem m10 = new MenuItem("Milk","Food",1.30);
+        for (int i = 0; i < menu.size()-1; i++)
+            if (menu.get(i).getType() == m10.getType()) {
+                System.out.println("The food item: " + menu.get(i).getItem());
+            }
+    }
+
+    static class MenuItem {
+        public String item;
+
+        public String type;
+
+        public double price;
+
+        public MenuItem(String item, String type, double price) {
+            this.item = item;
+            this.type = type;
+            this.price = price;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
+        public void setItem(String item) {
+            this.item = item;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+    }
+
+    public static void main(String[] args) {
+        MenuItem m1 = new MenuItem("Coffee","Drink",1.00);
+        MenuItem m2 = new MenuItem("Bagel","Food",2.00);
+        MenuItem m3 = new MenuItem("Tea","Drink",1.50);
+        MenuItem m4 = new MenuItem("Pizza","Food",2.00);
+        MenuItem m5 = new MenuItem("Water","Drink",3.00);
+        MenuItem m6 = new MenuItem("Donut","Food",2.75);
+        MenuItem m7 = null;
+        MenuItem m8 = new MenuItem("Cupcake","Food",2.75);
+
+        menu.add(m1);
+        menu.add(m2);
+        menu.add(m3);
+        menu.add(m4);
+        menu.add(m5);
+        menu.add(m6);
+        menu.add(null);
+
+        addOrder(menu.get(0));
+
+        addOrder(m8);
+
+        fulfillOrder();
+
+        listOrders();
+
+        dueAmount(menu);
+
+        cheapestItem(menu);
+
+        drinksOnly(menu);
+
+        foodOnly(menu);
+
+        System.exit(0);
+    }
+}
